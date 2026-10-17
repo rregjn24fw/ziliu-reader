@@ -32,35 +32,25 @@ python -m http.server 8080
 
 打开 `http://localhost:8080`，点右上角 **「试读示例」**。想试导入，`example/` 里有 `雨停之前.epub`、`雨停之前.txt`，一个专门用来折腾解析器的 `压力测试.epub`（10 章、带图、含超长段落和空章），还有两本对照书：`短章测试.txt`（每章只有 5 行）和 `长夜行.txt`（普通长度的一章）。
 
+**方式三（手机上最省事）**：直接打开 <https://rregjn24fw.github.io/ziliu-reader/>，同一个页面，手机上也能用。
+
 ---
 
-## 放到 GitHub Pages（手机上也能打开）
+## 线上地址（已经部署在 GitHub Pages）
 
-这个项目**没有构建步骤**，`index.html` 里的路径全是相对的（`styles.css`、`js/...`），所以整份文件放到 GitHub Pages 的子路径下就能直接跑——已经在 `/ziliu/index.html` 这种子目录 URL 下验证过。
+**https://rregjn24fw.github.io/ziliu-reader/** —— 手机浏览器直接打开就能用，不用装任何东西。
 
-把 `ziliu/` 里的**内容**放到仓库根目录（根目录能直接看到 `index.html`）：
+这就是本仓库的静态站点：没有构建步骤，`index.html` 里的路径全是相对的（`styles.css`、`js/...`），没有 CDN、没有后端，所以放在 `/<仓库名>/` 这种子路径下也能正常跑。
 
-```powershell
-cd ziliu
-git init
-git add .
-git commit -m "字流：互动阅读器"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
-git push -u origin main
-```
+**改完怎么更新**：在仓库里改文件（网页上传或 `git push`），Pages 几十秒后自动重建，刷新页面就是新的。
 
-然后仓库 → **Settings → Pages** → Build and deployment → Source 选 **Deploy from a branch** → Branch `main`、Folder `/ (root)` → Save。等一两分钟，打开：
-
-```
-https://<你的用户名>.github.io/<仓库名>/
-```
+**想自己再建一个**：把 `ziliu/` 里的**内容**放到新仓库根目录（根目录能直接看到 `index.html`），然后仓库 → **Settings → Pages** → Source 选 *Deploy from a branch* → Branch `main`、Folder `/ (root)` → Save，网址就是 `https://<用户名>.github.io/<仓库名>/`。
 
 - 免费账户的 Pages 只对 **public** 仓库开放
-- 仓库根目录必须直接有 `index.html`；如果整个 `ziliu` 文件夹原样传上去，网址要带 `/ziliu/`，根目录会 404
-- 根目录的 `.nojekyll` 只是让 GitHub 跳过 Jekyll 处理，别删；用网页上传的话在仓库里新建一个空文件叫 `.nojekyll` 即可
-- 手机上打开同一个网址就能用；导入的书和进度存在**这台设备的浏览器里**（IndexedDB / localStorage），不会跨设备同步
-- 国内访问 `github.io` 有时不稳；同一份文件直接拖进 **Cloudflare Pages / Netlify**（构建命令留空、输出目录 `/`）也能得到相同的站点
+- 仓库根目录必须直接有 `index.html`；如果整个 `ziliu` 文件夹原样放进去，网址要带 `/ziliu/`，根目录会 404
+- 根目录的 `.nojekyll` 让 GitHub 跳过 Jekyll 处理，别删
+- 导入的书和进度存在**这台设备的浏览器里**（IndexedDB / localStorage），不跨设备同步；换台手机就是空书架，重新导入即可（线上实测过：同一浏览器关掉重开，书和进度都还在）
+- 国内访问 `github.io` 偶尔会慢或者抽风；同一份文件拖进 **Cloudflare Pages / Netlify**（构建命令留空、输出目录 `/`）也能得到一样的站点
 - 整份目录约 16MB（大头是 `example/Wimpy 风格.epub` 3.3MB 和 `tools/` 里的说明截图），Pages 的单站限制是 1GB，放得下
 
 ---
